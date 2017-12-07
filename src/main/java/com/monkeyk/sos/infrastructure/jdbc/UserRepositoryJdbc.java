@@ -46,7 +46,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public User findByGuid(String guid) {
-        final String sql = " select * from user_ where  guid = ? ";
+        final String sql = " select * from users where  guid = ? ";
         final List<User> list = this.jdbcTemplate.query(sql, new Object[]{guid}, userRowMapper);
 
         User user = null;
@@ -69,7 +69,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public void saveUser(final User user) {
-        final String sql = " insert into user_(guid,archived,create_time,email,password,username,phone) " +
+        final String sql = " insert into users(guid,archived,create_time,email,password,username,phone) " +
                 " values (?,?,?,?,?,?,?) ";
         this.jdbcTemplate.update(sql, ps -> {
             ps.setString(1, user.guid());
@@ -85,7 +85,8 @@ public class UserRepositoryJdbc implements UserRepository {
         });
 
         //get user id
-        final Integer id = this.jdbcTemplate.queryForObject("select id from user_ where guid = ?", new Object[]{user.guid()}, Integer.class);
+        final Integer id = this.jdbcTemplate.queryForObject("select id from users where guid = ?", new Object[]{user
+            .guid()}, Integer.class);
 
         //insert privileges
         for (final Privilege privilege : user.privileges()) {
@@ -100,7 +101,7 @@ public class UserRepositoryJdbc implements UserRepository {
     @Override
     @CacheEvict(value = USER_CACHE, key = "#user.username()")
     public void updateUser(final User user) {
-        final String sql = " update user_ set username = ?, password = ?, phone = ?,email = ? where guid = ? ";
+        final String sql = " update users set username = ?, password = ?, phone = ?,email = ? where guid = ? ";
         this.jdbcTemplate.update(sql, ps -> {
             ps.setString(1, user.username());
             ps.setString(2, user.password());
@@ -115,8 +116,8 @@ public class UserRepositoryJdbc implements UserRepository {
     @Override
     @Cacheable(value = USER_CACHE, key = "#username")
     public User findByUsername(String username) {
-        final String sql = " select * from user_ where username = ? and archived = 0 ";
-        final List<User> list = this.jdbcTemplate.query(sql, new Object[]{username}, userRowMapper);
+         String sql = "select * from users where username =? and archived = 0 ";
+        List<User> list = this.jdbcTemplate.query(sql, new Object[]{username},userRowMapper);
 
         User user = null;
         if (!list.isEmpty()) {
@@ -129,7 +130,7 @@ public class UserRepositoryJdbc implements UserRepository {
 
     @Override
     public List<User> findUsersByUsername(String username) {
-        String sql = " select * from user_ where archived = 0 ";
+        String sql = " select * from users where archived = 0 ";
         Object[] params = new Object[]{};
         if (StringUtils.isNotEmpty(username)) {
             sql += " and username like ?";

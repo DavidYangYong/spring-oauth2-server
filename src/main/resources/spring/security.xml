@@ -129,11 +129,13 @@
     <beans:bean id="tokenStore" class="com.monkeyk.sos.domain.oauth.CustomJdbcTokenStore">
         <beans:constructor-arg index="0" ref="dataSource"/>
     </beans:bean>
+    <!--<beans:bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore"/>-->
 
     <beans:bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
         <beans:property name="tokenStore" ref="tokenStore"/>
         <beans:property name="clientDetailsService" ref="clientDetailsService"/>
         <beans:property name="supportRefreshToken" value="true"/>
+        <beans:property name="accessTokenValiditySeconds" value="${tokenServices-accessTokenValiditySeconds}"></beans:property>
     </beans:bean>
 
     <!--<global-method-security pre-post-annotations="enabled" proxy-target-class="true">-->

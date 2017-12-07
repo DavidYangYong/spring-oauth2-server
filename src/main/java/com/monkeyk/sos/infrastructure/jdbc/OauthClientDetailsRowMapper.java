@@ -46,7 +46,7 @@ public class OauthClientDetailsRowMapper implements RowMapper<OauthClientDetails
         clientDetails.refreshTokenValidity(getInteger(rs, "refresh_token_validity"));
 
         clientDetails.additionalInformation(rs.getString("additional_information"));
-        clientDetails.createTime(rs.getTimestamp("create_time").toLocalDateTime());
+            clientDetails.createTime(rs.getTimestamp("create_time").toLocalDateTime());
         clientDetails.archived(rs.getBoolean("archived"));
 
         clientDetails.trusted(rs.getBoolean("trusted"));

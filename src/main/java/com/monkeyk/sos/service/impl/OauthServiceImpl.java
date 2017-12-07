@@ -4,6 +4,8 @@ import com.monkeyk.sos.domain.dto.OauthClientDetailsDto;
 import com.monkeyk.sos.domain.oauth.OauthClientDetails;
 import com.monkeyk.sos.domain.oauth.OauthRepository;
 import com.monkeyk.sos.service.OauthService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @Service("oauthService")
 public class OauthServiceImpl implements OauthService {
 
+    Logger logger= LoggerFactory.getLogger(OauthServiceImpl.class);
     @Autowired
     private OauthRepository oauthRepository;
 

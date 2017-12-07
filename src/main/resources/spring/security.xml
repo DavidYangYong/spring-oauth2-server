@@ -126,10 +126,12 @@
 
     <!--Config token services-->
     <!--<beans:bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>-->
-    <beans:bean id="tokenStore" class="com.monkeyk.sos.domain.oauth.CustomJdbcTokenStore">
-        <beans:constructor-arg index="0" ref="dataSource"/>
+    <!--<beans:bean id="tokenStore" class="com.monkeyk.sos.domain.oauth.CustomJdbcTokenStore">-->
+        <!--<beans:constructor-arg index="0" ref="dataSource"/>-->
+    <!--</beans:bean>-->
+    <beans:bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore">
+        <beans:constructor-arg index="0" ref="jedisConnectionFactory"></beans:constructor-arg>
     </beans:bean>
-    <!--<beans:bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore"/>-->
 
     <beans:bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
         <beans:property name="tokenStore" ref="tokenStore"/>

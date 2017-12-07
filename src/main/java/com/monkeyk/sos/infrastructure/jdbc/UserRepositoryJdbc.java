@@ -11,24 +11,25 @@
  */
 package com.monkeyk.sos.infrastructure.jdbc;
 
+import static com.monkeyk.sos.infrastructure.CacheConstants.USER_CACHE;
+
 import com.monkeyk.sos.domain.user.Privilege;
 import com.monkeyk.sos.domain.user.User;
 import com.monkeyk.sos.domain.user.UserRepository;
-
-import static com.monkeyk.sos.infrastructure.CacheConstants.*;
-
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-
+import com.monkeyk.sos.service.impl.OauthServiceImpl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 /**
  * 2015/11/16
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
 @Repository("userRepositoryJdbc")
 public class UserRepositoryJdbc implements UserRepository {
 
+    Logger logger= LoggerFactory.getLogger(UserRepositoryJdbc.class);
 
     private static UserRowMapper userRowMapper = new UserRowMapper();
 
@@ -48,7 +50,7 @@ public class UserRepositoryJdbc implements UserRepository {
     public User findByGuid(String guid) {
         final String sql = " select * from users where  guid = ? ";
         final List<User> list = this.jdbcTemplate.query(sql, new Object[]{guid}, userRowMapper);
-
+logger.info("sql:"+sql);
         User user = null;
         if (!list.isEmpty()) {
             user = list.get(0);

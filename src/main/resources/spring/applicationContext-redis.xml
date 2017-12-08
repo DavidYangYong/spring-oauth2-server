@@ -6,38 +6,42 @@
 
 	<!-- redis数据源 -->
 	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-		<property name="maxIdle" value="${redis.maxIdle}" />
-		<property name="maxTotal" value="${redis.maxActive}" />
-		<property name="maxWaitMillis" value="${redis.maxWait}" />
-		<property name="testOnBorrow" value="${redis.testOnBorrow}" />
+		<!-- 最大空闲连接数 -->
+		<property name="maxIdle" value="100" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="10" />
+		<!--&lt;!&ndash; 在获取连接的时候检查有效性 &ndash;&gt;-->
+		<!--<property name="testOnBorrow" value="${redis.adapter.testOnBorrow}" />-->
+		<!--&lt;!&ndash; return 一个jedis实例给pool时，是否检查连接可用性 （ping()） &ndash;&gt;-->
+		<!--<property name="testOnReturn" value="${redis.adapter.testOnReturn}" />-->
+		<!--&lt;!&ndash; idle状态监测用异步线程evict进行检查， &ndash;&gt;-->
+		<!--<property name="testWhileIdle" value="${redis.adapter.testWhileIdle}" />-->
+		<!--&lt;!&ndash; 一次最多evict的pool里的jedis实例个数 &ndash;&gt;-->
+		<!--<property name="numTestsPerEvictionRun" value="${redis.adapter.numTestsPerEvictionRun}" />-->
+		<!--&lt;!&ndash; test idle 线程的时间间隔 &ndash;&gt;-->
+		<!--<property name="timeBetweenEvictionRunsMillis" value="${redis.adapter.timeBetweenEvictionRunsMillis}" />-->
 	</bean>
 
-	<!-- 定义集群连接池 -->
-	<bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
-		<constructor-arg index="0" ref="poolConfig" />
-		<constructor-arg index="1">
-			<list>
-				<!-- 配置分片式集群信息 -->
-				<bean class="redis.clients.jedis.JedisShardInfo">
-					<!-- 访问ip,type属性设置参数类型 -->
-					<constructor-arg index="0" value="${redis.host}" />
-					<!-- 端口号 -->
-					<constructor-arg index="1" value="${redis.port}" />
-				</bean>
-				<!-- <bean class="redis.clients.jedis.JedisShardInfo"> -->
-				<!-- <constructor-arg index="0" value="${redis.host2}"/> -->
-				<!-- <constructor-arg index="1" value="${redis.port2}"/> -->
-				<!-- </bean> -->
-			</list>
-		</constructor-arg>
-	</bean>
-
+	<!--<bean id="sentinelConfig"-->
+		<!--class="org.springframework.data.redis.connection.RedisSentinelConfiguration">-->
+		<!--&lt;!&ndash; master名称 sentinel.conf里面配置的主节点名称 &ndash;&gt;-->
+		<!--<constructor-arg index="0" value="${redis.adapter.masterName}" />-->
+		<!--&lt;!&ndash; sentinel的ip和端口列表 &ndash;&gt;-->
+		<!--<constructor-arg index="1">-->
+			<!--<set>-->
+				<!--<value>${redis.adapter.sentinel1}</value>-->
+				<!--<value>${redis.adapter.sentinel2}</value>-->
+				<!--<value>${redis.adapter.sentinel3}</value>-->
+			<!--</set>-->
+		<!--</constructor-arg>-->
+	<!--</bean>-->
 	<!-- Spring-redis连接池管理工厂 -->
 	<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-		<property name="hostName" value="${redis.host}"/>
-		<property name="port" value="${redis.port}"/>
-		<property name="password" value="${redis.pass}"/>
-		<property name="poolConfig" ref="poolConfig"/>
+		<property name="hostName" value="192.168.111.94" />
+		<property name="port" value="6379" />
+		<property name="password" value="jnc123" />
+		<property name="timeout" value="60000" />
+		<constructor-arg index="0" ref="poolConfig" />
 	</bean>
 
 	<!--<bean id="redisCacheTransfer" class="com.lxg.redis.RedisCacheTransfer">

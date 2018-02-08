@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+	<bean id="aclCache" class="org.springframework.security.acls.domain.EhCacheBasedAclCache">
+		<constructor-arg ref="cache" />
+		<constructor-arg ref="grantingStrategy" />
+		<constructor-arg ref="aclAuthorizationStrategy" />
+	</bean>
+	<bean id="cache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheName" value="aclCache" />
+		<property name="cacheManager" ref="aclCacheManager" />
+	</bean>
+
+	<bean id="aclCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<!-- 指定配置文件的位置 -->
+		<property name="configLocation" value="classpath:ehcache.xml" />
+		<!-- 指定新建的CacheManager的名称 -->
+		<property name="cacheManagerName" value="aclCacheManager" />
+	</bean>
+
+
+	<bean id="aclAuthorizationStrategy"
+		class="org.springframework.security.acls.domain.AclAuthorizationStrategyImpl">
+		<constructor-arg>
+			<list>
+				<bean
+					class="org.springframework.security.core.authority.SimpleGrantedAuthority">
+					<constructor-arg value="ROLE_ADMIN" /><!-- 改变所有权需要的权限 -->
+				</bean>
+				<bean
+					class="org.springframework.security.core.authority.SimpleGrantedAuthority">
+					<constructor-arg value="gaModifyAuditing" /><!-- 改变授权需要的权限 -->
+				</bean>
+				<bean
+					class="org.springframework.security.core.authority.SimpleGrantedAuthority">
+					<constructor-arg value="gaGeneralChanges" /><!-- 改变其它信息所需要的权限 -->
+				</bean>
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="grantingStrategy"
+		class="org.springframework.security.acls.domain.DefaultPermissionGrantingStrategy">
+		<constructor-arg>
+			<bean class="org.springframework.security.acls.domain.ConsoleAuditLogger" />
+		</constructor-arg>
+	</bean>
+	<bean id="aclService"
+		class="org.springframework.security.acls.jdbc.JdbcMutableAclService">
+		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="lookupStrategy" />
+		<constructor-arg ref="aclCache" />
+		<!-- 指定新增acl_sid的脚本 -->
+      <property name="insertSidSql"
+         value="insert into acl_sid(id, principal, sid) values (seq_acl_sid.nextval, ?, ?)" />
+      <!-- 指定新增acl_class的脚本 -->
+      <property name="insertClassSql"
+         value="insert into acl_class(id, class) values (seq_acl_class.nextval, ?)" />
+      <!-- 指定新增acl_object_identity的脚本 -->
+      <property name="insertObjectIdentitySql"
+         value="insert into acl_object_identity(id, object_id_class, object_id_identity, owner_sid, entries_inheriting) values(seq_acl_object_identity.nextval, ?, ?, ?, ?)" />
+      <!-- 指定新增acl_entry的脚本 -->
+      <property name="insertEntrySql"
+         value="insert into acl_entry(id, acl_object_identity, ace_order, sid, mask, granting, audit_success, audit_failure) values (seq_acl_entry.nextval, ?, ?, ?, ?, ?, ?, ?)" />
+      <!-- 查询刚刚新增的acl_sid的主键的SQL -->
+      <property name="sidIdentityQuery" value="select seq_acl_sid.currval from dual" />
+      <!-- 查询刚刚新增的acl_class的主键的SQL -->
+      <property name="classIdentityQuery" value="select seq_acl_class.currval from dual"/>
+
+	</bean>
+	<bean id="lookupStrategy"
+		class="org.springframework.security.acls.jdbc.BasicLookupStrategy">
+		<constructor-arg ref="dataSource" />
+		<constructor-arg ref="aclCache" />
+		<constructor-arg ref="aclAuthorizationStrategy" />
+		<constructor-arg ref="grantingStrategy" />
+	</bean>
+	
+	<bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+		<property name="permissionEvaluator" ref="aclPermissionEvaluator" />
+	</bean>
+	<bean id="aclPermissionEvaluator" class="org.springframework.security.acls.AclPermissionEvaluator">
+		<constructor-arg ref="aclService" />
+	</bean>
+
+</beans>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,30 +13,30 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.version>4.0.4.RELEASE</spring.version>
         <spring.security.version>4.0.4.RELEASE</spring.security.version>
         <spring.security.oauth.version>2.2.1.RELEASE</spring.security.oauth.version>
         <fasterxml.jackson.version>2.5.4</fasterxml.jackson.version>
 
         <aspectj.version>1.8.6</aspectj.version>
 
-        <!--jdbc execute sql config-->
-        <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>-->
-        <!--<jdbc.url>jdbc:mysql://localhost:3306/oauth2_test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8</jdbc.url>-->
-        <!--<jdbc.user>andaily</jdbc.user>-->
-        <!--<jdbc.pass>andaily</jdbc.pass>-->
-        <!--if do not use execute sql, change the value to true-->
+        <!--jdbc execute sql config -->
+        <!--<jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver> -->
+        <!--<jdbc.url>jdbc:mysql://localhost:3306/oauth2_test?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=utf8</jdbc.url> -->
+        <!--<jdbc.user>andaily</jdbc.user> -->
+        <!--<jdbc.pass>andaily</jdbc.pass> -->
+        <!--if do not use execute sql, change the value to true -->
         <jdbc.execute.skip>true</jdbc.execute.skip>
         <test.skip>true</test.skip>
     </properties>
 
-    <!--<developers>-->
-        <!--<developer>-->
-            <!--<name>shengzhao</name>-->
-            <!--<email>shengzhao@shengzhaoli.com</email>-->
-        <!--</developer>-->
-        <!--&lt;!&ndash;more developer&ndash;&gt;-->
-    <!--</developers>-->
+    <!--<developers> -->
+    <!--<developer> -->
+    <!--<name>shengzhao</name> -->
+    <!--<email>shengzhao@shengzhaoli.com</email> -->
+    <!--</developer> -->
+    <!--&lt;!&ndash;more developer&ndash;&gt; -->
+    <!--</developers> -->
 
 
     <build>
@@ -72,45 +71,45 @@
                 </configuration>
             </plugin>
 
-            <!--<plugin>-->
-                <!--<groupId>org.codehaus.mojo</groupId>-->
-                <!--<artifactId>sql-maven-plugin</artifactId>-->
-                <!--<version>1.4</version>-->
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>mysql</groupId>-->
-                        <!--<artifactId>mysql-connector-java</artifactId>-->
-                        <!--<version>5.1.35</version>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
+            <!--<plugin> -->
+            <!--<groupId>org.codehaus.mojo</groupId> -->
+            <!--<artifactId>sql-maven-plugin</artifactId> -->
+            <!--<version>1.4</version> -->
+            <!--<dependencies> -->
+            <!--<dependency> -->
+            <!--<groupId>mysql</groupId> -->
+            <!--<artifactId>mysql-connector-java</artifactId> -->
+            <!--<version>5.1.35</version> -->
+            <!--</dependency> -->
+            <!--</dependencies> -->
 
-                <!--<configuration>-->
-                    <!--<driver>${jdbc.driver}</driver>-->
-                    <!--<url>${jdbc.url}</url>-->
-                    <!--<username>${jdbc.user}</username>-->
-                    <!--<password>${jdbc.pass}</password>-->
-                    <!--<skip>${jdbc.execute.skip}</skip>-->
-                <!--</configuration>-->
+            <!--<configuration> -->
+            <!--<driver>${jdbc.driver}</driver> -->
+            <!--<url>${jdbc.url}</url> -->
+            <!--<username>${jdbc.user}</username> -->
+            <!--<password>${jdbc.pass}</password> -->
+            <!--<skip>${jdbc.execute.skip}</skip> -->
+            <!--</configuration> -->
 
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>init db</id>-->
-                        <!--<phase>initialize</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>execute</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<url>${jdbc.url}</url>-->
-                            <!--<autocommit>true</autocommit>-->
-                            <!--<srcFiles>-->
-                                <!--<srcFile>others/database/initial_db.ddl</srcFile>-->
-                                <!--<srcFile>others/database/oauth.ddl</srcFile>-->
-                            <!--</srcFiles>-->
-                            <!--<onError>continue</onError>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <!--<executions> -->
+            <!--<execution> -->
+            <!--<id>init db</id> -->
+            <!--<phase>initialize</phase> -->
+            <!--<goals> -->
+            <!--<goal>execute</goal> -->
+            <!--</goals> -->
+            <!--<configuration> -->
+            <!--<url>${jdbc.url}</url> -->
+            <!--<autocommit>true</autocommit> -->
+            <!--<srcFiles> -->
+            <!--<srcFile>others/database/initial_db.ddl</srcFile> -->
+            <!--<srcFile>others/database/oauth.ddl</srcFile> -->
+            <!--</srcFiles> -->
+            <!--<onError>continue</onError> -->
+            <!--</configuration> -->
+            <!--</execution> -->
+            <!--</executions> -->
+            <!--</plugin> -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.4</version>
@@ -145,8 +144,8 @@
                     <include>**/*</include>
                 </includes>
                 <excludes>
-                    <!--exclude file list-->
-                    <!--<exclude>spring-oauth-server.properties</exclude>-->
+                    <!--exclude file list -->
+                    <!--<exclude>spring-oauth-server.properties</exclude> -->
                 </excludes>
             </resource>
         </resources>
@@ -175,7 +174,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--public compile dependencies-->
+        <!--public compile dependencies -->
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>sitemesh</artifactId>
@@ -210,7 +209,7 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
-        <!--spring-->
+        <!--spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
@@ -256,7 +255,7 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        <!--spring security-->
+        <!--spring security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
@@ -292,16 +291,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.security</groupId>-->
-        <!--<artifactId>spring-security-acl</artifactId>-->
-        <!--<version>${spring.security.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.security</groupId>-->
-        <!--<artifactId>spring-security-crypto</artifactId>-->
-        <!--<version>${spring.security.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-acl</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <!--<dependency> -->
+        <!--<groupId>org.springframework.security</groupId> -->
+        <!--<artifactId>spring-security-crypto</artifactId> -->
+        <!--<version>${spring.security.version}</version> -->
+        <!--</dependency> -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
@@ -314,7 +313,7 @@
             <version>${spring.security.oauth.version}</version>
         </dependency>
 
-        <!--json-->
+        <!--json -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -359,7 +358,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <!--public test dependencies-->
+        <!--public test dependencies -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>

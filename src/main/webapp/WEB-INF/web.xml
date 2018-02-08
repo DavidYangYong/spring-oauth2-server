@@ -114,6 +114,8 @@
     <!--
         配置Spring Context 加载配置文件
     -->
+
+
     <!--contextConfigLocation -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -143,7 +145,7 @@
     <!--
         Spring MVC 配置
     -->
-    <!--mvc-->
+    <!--mvc
     <servlet>
         <servlet-name>mkk</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -152,7 +154,7 @@
     <servlet-mapping>
         <servlet-name>mkk</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
     <!--<error-page>-->
     <!--<error-code>404</error-code>-->
@@ -170,6 +172,17 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-
-
+    <!--
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:applicationContext-*.xml</param-value>
+    </context-param>-->
+    <servlet>
+        <servlet-name>MessageServlet</servlet-name>
+        <servlet-class>com.monkeyk.sos.web.controller.MessageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MessageServlet</servlet-name>
+        <url-pattern>/message.do</url-pattern>
+    </servlet-mapping>
 </web-app>

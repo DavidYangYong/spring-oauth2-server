@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+                     http://www.springframework.org/schema/security
+                     http://www.springframework.org/schema/security/spring-security-4.0.xsd ">
+	<!-- <sec:http auto-config='true'> <sec:intercept-url pattern="/service/admin/**" 
+		access="ROLE_ADMIN" /> <sec:intercept-url pattern="/service/user/**" access="ROLE_USER" 
+		/> </sec:http> -->
+	<sec:authentication-manager>
+		<sec:authentication-provider>
+			<user-service>
+				<user name="admin" password="admin" authorities="ROLE_USER, ROLE_ADMIN" />
+				<user name="user" password="user" authorities="ROLE_USER" />
+			</user-service>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+
+	<security:global-method-security pre-post-annotations="enabled">
+		<security:expression-handler ref="expressionHandler" />
+	</security:global-method-security>
+
+</beans:beans>
